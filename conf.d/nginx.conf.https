@@ -26,8 +26,8 @@ server {
     root /opt/aria2-webui/; 
     try_files $uri $uri/ /index.html;
   }
-  location /data/ {
-    root /opt/data/;
+  location /data {
+    alias /opt/data;
     autoindex on;
   }
   location /jsonrpc {
