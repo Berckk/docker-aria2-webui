@@ -7,8 +7,8 @@ server {
   location / {
     root /opt/aria2-webui;
   }
-  location /data/ {
-    root /opt/data/;
+  location /data {
+    alias /opt/data;
     autoindex on;
   }
   location /jsonrpc {
