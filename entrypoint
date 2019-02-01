@@ -1,0 +1,37 @@
+#!/bin/sh
+
+export SUPERVISOR_USER="${SUPERVISOR_USER:-admin}"
+export SUPERVISOR_PASSWORD="${SUPERVISOR_PASSWORD:-admin}"
+export RUN_USER="${RUN_USER:-nobody}"
+export RUN_GROUP="${RUN_GROUP:-ping}"
+export RPC_TOKEN="${RPC_TOKEN:-$(openssl rand -base64 10)}"
+
+
+if ! id -u ${RUN_USER} > /dev/null 2>&1; then
+        groupadd --gid ${RUN_GROUP_ID} ${RUN_GROUP}
+        useradd --uid ${RUN_USER_ID} --gid ${RUN_GROUP_ID} ${RUN_USER}
+fi
+
+if [ ! -e /opt/conf/aria2.conf ]; then
+        mkdir -p /opt/conf/
+        touch /opt/conf/aria2.conf
+fi
+
+#if [ ! -e /opt/data ];  then
+#        mkdir -p /opt/data
+#       chown -R ${RUN_USER}:${RUN_GROUP} /opt/data
+#fi
+
+if [ "$SKIP_SSL" == "true" ]; then
+   mv /etc/nginx/conf.d/nginx.conf.http /etc/nginx/conf.d/nginx.conf
+else
+   if [ ! -f /etc/nginx/ssl/server.key ] && [ ! -f /etc/nginx/ssl/server.crt ]; then
+        mkdir -p /etc/nginx/ssl
+        openssl req -x509 -newkey rsa:4096 -nodes -keyout /etc/nginx/ssl/server.key -out /etc/nginx/ssl/server.crt -days 365 -subj "/C=US/ST=FAKE/L=FAKE/O=FAKE/OU=FAKE/CN=FAKE"
+   fi
+   mv /etc/nginx/conf.d/nginx.conf.https /etc/nginx/conf.d/nginx.conf
+fi
+
+echo "RPC token: $RPC_TOKEN"
+
+exec "$@"
