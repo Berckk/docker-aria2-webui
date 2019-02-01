@@ -1,0 +1,40 @@
+map $http_upgrade $connection_upgrade {
+     default upgrade;
+     '' close;
+}
+
+server {
+  listen 80;
+  listen [::]:80;
+  
+  server_name _;
+  return 301 https://$host$request_uri;
+}
+
+server {
+  listen 443;
+  listen [::]:443;
+
+  server_name _;
+
+  ssl on;
+
+  ssl_certificate /etc/nginx/ssl/server.crt;
+  ssl_certificate_key /etc/nginx/ssl/server.key;
+
+  location / {
+    root /opt/aria2-webui/; 
+    try_files $uri $uri/ /index.html;
+  }
+  location /data/ {
+    root /opt/data/;
+    autoindex on;
+  }
+  location /jsonrpc {
+    proxy_pass http://localhost:6800/jsonrpc;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection $connection_upgrade;
+    proxy_read_timeout 86400;
+  }
+}
