@@ -1,7 +1,5 @@
 #!/bin/sh
 
-export SUPERVISOR_USER="${SUPERVISOR_USER:-admin}"
-export SUPERVISOR_PASSWORD="${SUPERVISOR_PASSWORD:-admin}"
 export RUN_USER="${RUN_USER:-nobody}"
 export RUN_GROUP="${RUN_GROUP:-ping}"
 export RPC_TOKEN="${RPC_TOKEN:-$(openssl rand -base64 10)}"
@@ -16,11 +14,6 @@ if [ ! -e /opt/conf/aria2.conf ]; then
         mkdir -p /opt/conf/
         touch /opt/conf/aria2.conf
 fi
-
-#if [ ! -e /opt/data ];  then
-#        mkdir -p /opt/data
-#       chown -R ${RUN_USER}:${RUN_GROUP} /opt/data
-#fi
 
 if [ "$SKIP_SSL" == "true" ]; then
    mv /etc/nginx/conf.d/nginx.conf.http /etc/nginx/conf.d/nginx.conf
