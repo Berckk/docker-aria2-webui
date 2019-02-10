@@ -8,7 +8,7 @@
 
 # Docker
 ```
-docker run -d --restart always --name aria2 -p 443:443 lukasmrtvy/docker-aria2-webui:latest
+docker run -d --restart always --name aria2 -p 5555:5555 lukasmrtvy/docker-aria2-webui:latest
 ```
 
 # Variables
