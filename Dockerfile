@@ -19,7 +19,7 @@ COPY conf.d/ /etc/nginx/conf.d/
 
 RUN chmod +x entrypoint
 
-EXPOSE 6800
+EXPOSE 5555
 
 USER root
 
