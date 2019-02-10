@@ -1,6 +1,6 @@
 server {
   listen 5555;
-  listen [::]:5555;
+  listen [::]:5555 ipv6only=on;
 
   server_name _;
 
