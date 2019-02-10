@@ -10,7 +10,7 @@ RUN apk add --update aria2 nginx supervisor openssl && \
     mkdir -p /run/nginx/ && \
     ln -sf /dev/stdout /var/log/nginx/access.log && \ 
     ln -sf /dev/stderr /var/log/nginx/error.log && \
-    apk del .build && \
+    apk del build && \
     rm -rf /tmp/aria2-webui
 
 COPY entrypoint /
