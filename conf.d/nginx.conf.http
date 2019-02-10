@@ -10,7 +10,8 @@ server {
   server_name _;
 
   location / {
-    root /opt/aria2-webui;
+    root /opt/aria2-webui/; 
+    try_files $uri $uri/ /index.html;
   }
   location /data {
     alias /opt/data;
