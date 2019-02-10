@@ -10,6 +10,7 @@ server {
   location /data {
     alias /opt/data;
     autoindex on;
+    fancyindex on;  
   }
   location /jsonrpc {
     proxy_pass http://localhost:6800/jsonrpc;
