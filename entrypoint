@@ -2,6 +2,8 @@
 
 export RUN_USER="${RUN_USER:-nobody}"
 export RUN_GROUP="${RUN_GROUP:-ping}"
+export RUN_GROUP_ID="${RUN_GROUP_ID:-1337}"
+export RUN_USER_ID="${RUN_USER_ID:-1337}"
 export RPC_TOKEN="${RPC_TOKEN:-$(openssl rand -base64 10)}"
 
 
